@@ -1,23 +1,58 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gerenciamento de Tarefas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
             padding-top: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
+        }
+        header {
+            background: linear-gradient(90deg, #6a5acd, #9370db);
+            color: white;
+            border-radius: 8px;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+        header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        header p {
+            font-size: 0.95rem;
+        }
+        .card {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .card-header {
+            font-weight: bold;
+        }
+        .card-header.bg-primary {
+            background-color: #007bff !important;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .stats-box {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        .stats-box span {
+            font-size: 0.9rem;
+            padding: 6px 12px;
+            border-radius: 6px;
         }
         .task-card {
             transition: all 0.3s ease;
-            border-radius: 10px;
         }
         .task-card:hover {
             transform: translateY(-5px);
@@ -36,80 +71,51 @@
         .priority-low {
             border-left: 4px solid #28a745;
         }
-        .header-gradient {
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-            color: white;
-            border-radius: 10px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-        .stats-card {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-        .btn-filter {
-            transition: all 0.3s;
-        }
-        .btn-filter:hover {
-            transform: scale(1.05);
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <header class="header-gradiant text-center mb-5">
-            <h1 class="display-4"><i class="bi bi-check2-circle"></i>Sistemas de tarefas</h1>
-            <p class="lead">Oranize suas tarefas diárias de forma simples e eficiente</p>
+        <header class="text-center">
+            <h1><i class="bi bi-check-circle"></i> Sistema de Tarefas</h1>
+            <p>Organize suas tarefas diárias de forma simples e eficiente</p>
         </header>
 
         <div class="row">
             <div class="col-md-6">
-                <div class="card mb-4 shadow-sm">
+                <div class="card mb-4">
                     <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0"><i class="bi bi-plus-circle"></i> Adicionar Nova Tarefa</h5>
+                        <i class="bi bi-plus-circle"></i> Adicionar Nova Tarefa
                     </div>
                     <div class="card-body">
                         <form id="taskForm">
-                            <div class="mb-3">
-                                <label for="taskTitle" class="form-label">Título da Tarefa</label>
-                                <input type="text" class="form-control" id="taskTitle" required placeholder="Ex: Estudar para a prova">
-                            </div>
-                            <div class="mb-3">
-                                <label for="taskDescription" class="form-label">Descrição</label>
-                                <textarea class="form-control" id="taskDescription" rows="2" placeholder="Ex: Revisar capítulos 5 a 8"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="taskPriority" class="form-label">Prioridade</label>
-                                <select class="form-select" id="taskPriority">
-                                    <option value="high">Alta</option>
-                                    <option value="medium" selected>Média</option>
-                                    <option value="low">Baixa</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="taskDeadline" class="form-label">Prazo</label>
-                                <input type="date" class="form-control" id="taskDeadline">
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100"><i class="bi bi-plus-lg"></i> Adicionar Tarefa</button>
+                            <input type="text" class="form-control mb-3" id="taskTitle" placeholder="Ex: Estudar para a prova" required>
+                            <textarea class="form-control mb-3" id="taskDescription" placeholder="Ex: Revisar capítulos 5 a 8" rows="2"></textarea>
+                            <select class="form-select mb-3" id="taskPriority">
+                                <option value="high">Alta</option>
+                                <option value="medium" selected>Média</option>
+                                <option value="low">Baixa</option>
+                            </select>
+                            <input type="date" class="form-control mb-3" id="taskDeadline">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-plus-circle"></i> Adicionar Tarefa
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6">
-                <div class="card shadow-sm">
+                <div class="card">
                     <div class="card-header bg-info text-white">
-                        <h5 class="mb-0"><i class="bi bi-funnel"></i> Filtros e Estatísticas</h5>
+                        <i class="bi bi-funnel"></i> Filtros e Estatísticas
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label">Filtrar por:</label>
                             <div class="btn-group w-100" role="group">
-                                <button type="button" class="btn btn-outline-primary active btn-filter" data-filter="all"><i class="bi bi-collection"></i> Todas</button>
-                                <button type="button" class="btn btn-outline-success btn-filter" data-filter="completed"><i class="bi bi-check2-all"></i> Concluídas</button>
-                                <button type="button" class="btn btn-outline-warning btn-filter" data-filter="pending"><i class="bi bi-hourglass-split"></i> Pendentes</button>
+                                <button type="button" class="btn btn-outline-primary active" data-filter="all">Todas</button>
+                                <button type="button" class="btn btn-outline-success" data-filter="completed">Concluídas</button>
+                                <button type="button" class="btn btn-outline-warning" data-filter="pending">Pendentes</button>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -120,12 +126,12 @@
                                 <option value="priority">Prioridade</option>
                             </select>
                         </div>
-                        <div class="stats-card">
-                            <h6><i class="bi bi-graph-up"></i> Estatísticas:</h6>
-                            <div class="d-flex justify-content-between mt-3">
-                                <span class="badge bg-primary p-2">Total: <span id="totalTasks">5</span></span>
-                                <span class="badge bg-success p-2">Concluídas: <span id="completedTasks">2</span></span>
-                                <span class="badge bg-warning p-2">Pendentes: <span id="pendingTasks">3</span></span>
+                        <div>
+                            <h6>Estatísticas:</h6>
+                            <div class="stats-box">
+                                <span class="bg-primary text-white">Total: <span id="totalTasks">0</span></span>
+                                <span class="bg-success text-white">Concluídas: <span id="completedTasks">0</span></span>
+                                <span class="bg-warning text-dark">Pendentes: <span id="pendingTasks">0</span></span>
                             </div>
                         </div>
                     </div>
@@ -135,181 +141,177 @@
 
         <div class="row mt-4">
             <div class="col-12">
-                <h3 class="mb-3"><i class="bi bi-list-task"></i> Minhas Tarefas</h3>
-                <div id="tasksList" class="row">
-                    <div class="col-md-6 mb-3">
-                        <div class="card task-card priority-high">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start">
-                                    <h5 class="card-title">Estudar para a prova de Matemática</h5>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox">
-                                    </div>
-                                </div>
-                                <p class="card-text">Revisar capítulos 5 a 8 e exercícios</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-danger">Alta Prioridade</span>
-                                    <small class="text-muted">Prazo: 15/09/2025</small>
-                                </div>
-                                <div class="mt-3 d-flex justify-content-end">
-                                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> Excluir</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 mb-3">
-                        <div class="card task-card priority-medium border-success">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start">
-                                    <h5 class="card-title completed">Fazer compras do mês</h5>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" checked>
-                                    </div>
-                                </div>
-                                <p class="card-text completed">Arroz, feijão, carne e verduras</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-warning">Média Prioridade</span>
-                                    <small class="text-muted">Prazo: 10/09/2025</small>
-                                </div>
-                                <div class="mt-3 d-flex justify-content-end">
-                                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> Excluir</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 mb-3">
-                        <div class="card task-card priority-low">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start">
-                                    <h5 class="card-title">Ler livro novo</h5>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox">
-                                    </div>
-                                </div>
-                                <p class="card-text">Ler pelo menos 2 capítulos</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-success">Baixa Prioridade</span>
-                                    <small class="text-muted">Prazo: 30/09/2025</small>
-                                </div>
-                                <div class="mt-3 d-flex justify-content-end">
-                                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> Excluir</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 mb-3">
-                        <div class="card task-card priority-medium border-success">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start">
-                                    <h5 class="card-title completed">Enviar relatório</h5>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" checked>
-                                    </div>
-                                </div>
-                                <p class="card-text completed">Relatório mensal de atividades</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-warning">Média Prioridade</span>
-                                    <small class="text-muted">Prazo: 05/09/2025</small>
-                                </div>
-                                <div class="mt-3 d-flex justify-content-end">
-                                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> Excluir</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 mb-3">
-                        <div class="card task-card priority-high">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start">
-                                    <h5 class="card-title">Preparar apresentação</h5>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox">
-                                    </div>
-                                </div>
-                                <p class="card-text">Preparar slides para reunião importante</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-danger">Alta Prioridade</span>
-                                    <small class="text-muted">Prazo: 18/09/2025</small>
-                                </div>
-                                <div class="mt-3 d-flex justify-content-end">
-                                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> Excluir</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <h3 class="mb-3">Minhas Tarefas</h3>
+                <div id="tasksList" class="row"></div>
             </div>
         </div>
     </div>
-
     <footer class="text-center mt-5 mb-3 text-muted">
         <p>Sistema de Gerenciamento de Tarefas &copy; 2025 - Desenvolvido para o projeto prático</p>
     </footer>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
-    <script> 
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('taskForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+    <script>
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'Sem prazo';
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            return new Date(dateString).toLocaleDateString('pt-BR', options);
+        }
+
+        function saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            updateStats();
+        }
+
+        function updateStats() {
+            const total = tasks.length;
+            const completed = tasks.filter(task => task.completed).length;
+            const pending = total - completed;
+
+            document.getElementById('totalTasks').textContent = total;
+            document.getElementById('completedTasks').textContent = completed;
+            document.getElementById('pendingTasks').textContent = pending;
+        }
+
+        function renderTasks() {
+            const tasksList = document.getElementById('tasksList');
+            tasksList.innerHTML = '';
+
+            const filter = document.querySelector('.btn-group .active').dataset.filter;
+            const sortBy = document.getElementById('sortTasks').value;
+
+            let filteredTasks = tasks;
+            if (filter === 'completed') {
+                filteredTasks = tasks.filter(task => task.completed);
+            } else if (filter === 'pending') {
+                filteredTasks = tasks.filter(task => !task.completed);
+            }
+
+            filteredTasks.sort((a, b) => {
+                if (sortBy === 'newest') {
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                } else if (sortBy === 'oldest') {
+                    return new Date(a.createdAt) - new Date(b.createdAt);
+                } else if (sortBy === 'priority') {
+                    const priorityOrder = { high: 3, medium: 2, low: 1 };
+                    return priorityOrder[b.priority] - priorityOrder[a.priority];
+                }
+                return 0;
+            });
+
+            if (filteredTasks.length === 0) {
+                tasksList.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <i class="bi bi-inbox display-1 d-block mb-3"></i>
+                        <h4>Nenhuma tarefa encontrada</h4>
+                        <p class="text-muted">Adicione uma nova tarefa para começar</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredTasks.forEach(task => {
+                const taskElement = document.createElement('div');
+                taskElement.className = 'col-md-6 mb-3';
+                taskElement.innerHTML = `
+                    <div class="card task-card priority-${task.priority} ${task.completed ? 'border-success' : ''}">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h5 class="card-title ${task.completed ? 'completed' : ''}">${task.title}</h5>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" ${task.completed ? 'checked' : ''} 
+                                        onchange="toggleTask('${task.id}')">
+                                </div>
+                            </div>
+                            <p class="card-text ${task.completed ? 'completed' : ''}">${task.description || 'Sem descrição'}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge ${task.priority === 'high' ? 'bg-danger' : task.priority === 'medium' ? 'bg-warning' : 'bg-success'}">
+                                    ${task.priority === 'high' ? 'Alta' : task.priority === 'medium' ? 'Média' : 'Baixa'} Prioridade
+                                </span>
+                                <small class="text-muted">Prazo: ${formatDate(task.deadline)}</small>
+                            </div>
+                            <div class="mt-3 d-flex justify-content-end">
+                                <button class="btn btn-sm btn-outline-danger" onclick="deleteTask('${task.id}')">Excluir</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                tasksList.appendChild(taskElement);
+            });
+        }
+
+        function addTask(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('taskTitle').value;
+            const description = document.getElementById('taskDescription').value;
+            const priority = document.getElementById('taskPriority').value;
+            const deadline = document.getElementById('taskDeadline').value;
+
+            const newTask = {
+                id: generateId(),
+                title,
+                description,
+                priority,
+                deadline,
+                completed: false,
+                createdAt: new Date().toISOString()
+            };
+
+            tasks.push(newTask);
+            saveTasks();
+            renderTasks();
+
+            document.getElementById('taskForm').reset();
             alert('Tarefa adicionada com sucesso!');
-            this.reset();
-        });
-        
-        document.querySelectorAll('.btn-filter').forEach(button => {
-            button.addEventListener('click', function() {
-                document.querySelectorAll('.btn-filter').forEach(btn => {
-                    btn.classList.remove('active');
+        }
+
+        function toggleTask(id) {
+            tasks = tasks.map(task => {
+                if (task.id === id) {
+                    return { ...task, completed: !task.completed };
+                }
+                return task;
+            });
+            saveTasks();
+            renderTasks();
+        }
+
+        function deleteTask(id) {
+            if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
+                tasks = tasks.filter(task => task.id !== id);
+                saveTasks();
+                renderTasks();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('taskForm').addEventListener('submit', addTask);
+            
+            document.querySelectorAll('.btn-group button').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.btn-group button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    renderTasks();
                 });
-                this.classList.add('active');
-                alert('Filtro aplicado: ' + this.textContent.trim());
             });
+            
+            document.getElementById('sortTasks').addEventListener('change', renderTasks);
+            
+            renderTasks();
+            updateStats();
+            
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('taskDeadline').setAttribute('min', today);
         });
-        
-        document.getElementById('sortTasks').addEventListener('change', function() {
-            alert('Ordenando por: ' + this.options[this.selectedIndex].text);
-        });
-        
-        document.querySelectorAll('.form-check-input').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const card = this.closest('.card');
-                const title = card.querySelector('.card-title');
-                const text = card.querySelector('.card-text');
-                
-                if (this.checked) {
-                    title.classList.add('completed');
-                    text.classList.add('completed');
-                    card.classList.add('border-success');
-                } else {
-                    title.classList.remove('completed');
-                    text.classList.remove('completed');
-                    card.classList.remove('border-success');
-                }
-                
-                document.getElementById('completedTasks').textContent = 
-                    document.querySelectorAll('.form-check-input:checked').length;
-                document.getElementById('pendingTasks').textContent = 
-                    document.querySelectorAll('.form-check-input:not(:checked)').length;
-            });
-        });
-        
-        document.querySelectorAll('.btn-outline-danger').forEach(button => {
-            button.addEventListener('click', function() {
-                if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
-                    this.closest('.col-md-6').remove();
-                    alert('Tarefa excluída com sucesso!');
-                    
-                    document.getElementById('totalTasks').textContent = 
-                        document.querySelectorAll('.col-md-6').length;
-                }
-            });
-        });
-        
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('taskDeadline').setAttribute('min', today);
-    });
     </script>
 </body>
 </html>
