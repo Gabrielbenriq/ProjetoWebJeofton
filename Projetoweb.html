@@ -249,5 +249,67 @@
     <footer class="text-center mt-5 mb-3 text-muted">
         <p>Sistema de Gerenciamento de Tarefas &copy; 2025 - Desenvolvido para o projeto prático</p>
     </footer>
+
+    <script> 
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('taskForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Tarefa adicionada com sucesso!');
+            this.reset();
+        });
+        
+        document.querySelectorAll('.btn-filter').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.btn-filter').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                alert('Filtro aplicado: ' + this.textContent.trim());
+            });
+        });
+        
+        document.getElementById('sortTasks').addEventListener('change', function() {
+            alert('Ordenando por: ' + this.options[this.selectedIndex].text);
+        });
+        
+        document.querySelectorAll('.form-check-input').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const card = this.closest('.card');
+                const title = card.querySelector('.card-title');
+                const text = card.querySelector('.card-text');
+                
+                if (this.checked) {
+                    title.classList.add('completed');
+                    text.classList.add('completed');
+                    card.classList.add('border-success');
+                } else {
+                    title.classList.remove('completed');
+                    text.classList.remove('completed');
+                    card.classList.remove('border-success');
+                }
+                
+                document.getElementById('completedTasks').textContent = 
+                    document.querySelectorAll('.form-check-input:checked').length;
+                document.getElementById('pendingTasks').textContent = 
+                    document.querySelectorAll('.form-check-input:not(:checked)').length;
+            });
+        });
+        
+        document.querySelectorAll('.btn-outline-danger').forEach(button => {
+            button.addEventListener('click', function() {
+                if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
+                    this.closest('.col-md-6').remove();
+                    alert('Tarefa excluída com sucesso!');
+                    
+                    document.getElementById('totalTasks').textContent = 
+                        document.querySelectorAll('.col-md-6').length;
+                }
+            });
+        });
+        
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('taskDeadline').setAttribute('min', today);
+    });
+    </script>
 </body>
 </html>
